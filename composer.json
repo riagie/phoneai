@@ -1,0 +1,15 @@
+{
+    "require": {
+        "workerman/workerman": "^4.2",
+        "vlucas/phpdotenv": "^5.6",
+        "react/http": "^1.11",
+        "guzzlehttp/guzzle": "^7.9"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.4"
+    },
+    "scripts": {
+        "format": "php-cs-fixer fix --config=.php-cs-fixer.php"
+
+    }
+}
