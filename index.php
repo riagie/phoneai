@@ -9,7 +9,7 @@ use GuzzleHttp\Client;
 require_once __DIR__ . '/vendor/autoload.php';
 
 Dotenv::createImmutable(__DIR__)->load();
-$httpClient = new Client(['timeout' => 10, 'verify' => false]);
+$httpClient = new Client(['timeout' => 30, 'verify' => false]);
 $datasheet  = __DIR__ . '/datasheet.json';
 
 $worker = new Worker('http://' . $_ENV['HOST'] . ':' . $_ENV['PORT']);
