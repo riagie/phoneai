@@ -31,7 +31,9 @@ cp .env.example .env
 | `API_URL`           | External API for contact lookup                  | *Required*  |
 | `OPENAI_KEY`        | API key for OpenAI                               | *Required*  |
 | `OPENAI_URL`        | OpenAI API endpoint                              | *Required*  |
-| `DATA_EXPIRY_MONTHS` | Number of months before cached data expires     | `1`         |
+| `OPENAI_MODEL`      | OpenAI API model                              | *Required*  |
+| `OPENAI_CONTENT`    | OpenAI API content                              | *Required*  |
+| `DATA_EXPIRY_MONTHS`| Number of months before cached data expires      | `1`         |
 
 ---
 
