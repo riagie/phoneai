@@ -49,9 +49,9 @@ function handlePhoneNumber($connection, $httpClient, $datasheet, $number)
 
 		$contact['timestamp']   = time();
 		$contact['description'] = fetchWithApi($httpClient, $_ENV['OPENAI_URL'], [
-			'model'    => 'gpt-4o-mini',
+			'model'    => $_ENV['OPENAI_MODEL'],
 			'messages' => [
-				['role' => 'system', 'content' => 'Berdasarkan daftar nama kontak ini, buat deskripsi tentang siapa orang tersebut, dimana dia kuliah, dimana dia bekerja, apa hobinya, apa komunitas yang diikuti, apa kendaraan yang dimiliki atau diminati, siapa relasi keluarganya, siapa relasi pertemanannya, pendidikan, karier, kendaraan, serta semua informasi lainnya yang bisa diperoleh berdasarkan data kontak tersebut.'],
+				['role' => 'system', 'content' => $_ENV['OPENAI_CONTENT']],
 				['role' => 'user', 'content' => implode(', ', (array) $contact['tag'])],
 			],
 			'stream' => false,

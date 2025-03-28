@@ -1,70 +1,113 @@
-# **📞 PhoneAI - Intelligent Contact Lookup**  
-PhoneAI is a **Workerman-based** system that enables contact searches using phone numbers. It also integrates with **OpenAI** to generate automatic descriptions based on contact data.  
+## PhoneAI - Intelligent Contact Lookup API  
 
-## **🔹 Key Features:**  
-✅ **Contact Lookup** → Retrieve information based on phone numbers.  
-✅ **Automatic Data Caching** → Stores data in `datasheet.json` and updates it automatically.  
-✅ **Data Validation** → If the data is older than the configured limit (`DATA_EXPIRY_MONTHS` in `.env`), it will be re-fetched from the API.  
-✅ **AI-Generated Descriptions** → Uses OpenAI to generate additional details about contacts.  
-✅ **Environment Configuration** → Supports `.env` for easy setup and configuration.  
-✅ **API Endpoints:**  
-   - `GET /{phoneNumber}` → Lookup contact details by phone number.  
-   - `GET /test` → Check if the server is running properly.  
+PhoneAI is a ***Workerman-based API*** designed for programmatic contact lookups using phone numbers. It integrates with external APIs to retrieve contact details and leverages ***OpenAI*** to generate descriptions based on the retrieved data. The system caches results in `datasheet.json`, updating them automatically based on the expiration period set in `.env`.  
 
-## **🛠 Technologies Used:**  
-🔹 PHP + Workerman (HTTP Server)  
-🔹 GuzzleHttp (API Requests)  
-🔹 OpenAI API (AI Descriptions)  
-🔹 Dotenv (Configuration)  
+---
 
-## **🚀 Installation & Setup:**  
+### Features  
 
-### **1️⃣ Clone the Repository**  
-```sh
-git clone https://github.com/username/phoneai.git
-cd phoneai
-```
+- ***Phone Number Lookup*** → Retrieve contact details via API.  
+- ***Intelligent Caching*** → Stores contact details locally and refreshes them after the configured period (`DATA_EXPIRY_MONTHS` in `.env`).  
+- ***AI-Generated Descriptions*** → Uses OpenAI to create detailed insights about contacts.  
+- ***Workerman HTTP Server*** → High-performance, asynchronous PHP API server.  
+- ***Environment Configuration*** → Customizable API settings via `.env`.  
+- ***Minimal Dependencies*** → Lightweight and optimized for efficiency.  
 
-### **2️⃣ Install Dependencies**  
-```sh
-composer install
-```
+---
 
-### **3️⃣ Create and Configure `.env` File**  
+### Configuration  
+
+#### 1. Set Up Environment Variables  
+Copy `.env.example` to `.env` and update values accordingly:  
+
 ```sh
 cp .env.example .env
 ```
-Update the `.env` file with your API keys and server configuration.
 
-### **4️⃣ Run the Server**  
+| Variable             | Description                                      | Default      |
+|----------------------|--------------------------------------------------|-------------|
+| `HOST`              | API server host                                  | `localhost` |
+| `PORT`              | API server port                                  | `8080`      |
+| `API_URL`           | External API for contact lookup                  | *Required*  |
+| `OPENAI_KEY`        | API key for OpenAI                               | *Required*  |
+| `OPENAI_URL`        | OpenAI API endpoint                              | *Required*  |
+| `DATA_EXPIRY_MONTHS` | Number of months before cached data expires     | `1`         |
+
+---
+
+#### 2. Set Up Datasheet Cache  
+Copy `datasheet.example.json` to `datasheet.json` to enable caching:  
+
+```sh
+cp datasheet.example.json datasheet.json
+```
+
+The `datasheet.json` file stores previously searched contacts to optimize API performance.  
+
+---
+
+### Running the API  
+
+#### Start Workerman (Foreground Mode)  
+```sh
+php index.php start
+```
+
+#### Start Workerman (Daemon Mode - Background Process)  
 ```sh
 php index.php start -d
 ```
 
-### **5️⃣ Open in Browser**  
-[http://localhost:8080](http://localhost:8080)  
+Once started, the API is accessible via HTTP requests.  
 
-## **📌 Available Commands:**  
+---
+
+### API Endpoints  
+
+| Method | Endpoint         | Description                           |
+|--------|----------------|--------------------------------------|
+| `GET`  | `/test`         | Check API availability.            |
+| `GET`  | `/{phoneNumber}` | Retrieve contact details.          |
+
+---
+
+### API Commands  
+
+| Command                        | Description                              |
+|---------------------------------|------------------------------------------|
+| `php index.php start`          | Start the API server.                    |
+| `php index.php start -d`       | Start the server in daemon mode.         |
+| `php index.php status`         | Show API server status.                  |
+| `php index.php status -d`      | Show server status in daemon mode.       |
+| `php index.php connections`    | Display active connections.              |
+| `php index.php stop`           | Stop the API server.                     |
+| `php index.php stop -g`        | Stop all processes globally.             |
+| `php index.php restart`        | Restart the API server.                  |
+| `php index.php reload`         | Reload without downtime.                 |
+| `php index.php reload -g`      | Reload all processes globally.           |
+
+---
+
+### API Request Example  
+
 ```sh
-php index.php start        # Start the server  
-php index.php start -d     # Start in daemon mode  
-php index.php status       # Check the server status  
-php index.php status -d    # Check detailed status  
-php index.php connections  # View active connections  
-php index.php stop         # Stop the server  
-php index.php stop -g      # Stop all processes  
-php index.php restart      # Restart the server  
-php index.php reload       # Reload workers  
-php index.php reload -g    # Reload all workers  
+curl http://localhost:8080/6281234567890
+```
+
+***Response:***  
+```json
+{
+  "timestamp": 1712385600,
+  "nomor": "6281234567890",
+  "total_tag": 2,
+  "tag": "Business # Technology",
+  "description": "John Doe is a tech entrepreneur with experience in software development..."
+}
 ```
 
 ---
 
-📌 **Notes:**  
-- Make sure your `.env` file is properly configured.  
-- To modify the cache expiration period, update `DATA_EXPIRY_MONTHS` in `.env`.  
-- Workerman should be started using `php index.php start -d` for daemon mode.  
-
-🛠 **Developed by [Ogienurdiana](https://github.com/username)** 🚀  
-
----
+### Notes  
+- `.env` must be correctly configured before running the API.  
+- `datasheet.json` must exist for caching to work.  
+- If using a custom port, update API requests accordingly.
