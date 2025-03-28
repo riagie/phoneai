@@ -1,6 +1,7 @@
 # Ignore the vendor directory
 vendor/
 datasheet.json
+.htaccess
 
 # Ignore the Composer lock file
 composer.lock
